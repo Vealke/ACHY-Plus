@@ -1,0 +1,16 @@
+{
+  "name": "ACHY",
+  "version": "1.0.0",
+  "description": "ACHY the minecraft Anarchy bot.",
+  "main": "UNSPECIFIED",
+  "repository": "https://github.com/Vealke/ACHY-Plus",
+  "author": "Vealke",
+  "license": "Apache-2.0",
+  "private": "true",
+  "dependencies": {
+    "mineflayer": "^4.39.0"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
