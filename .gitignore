@@ -1,2 +1,6 @@
+#JS
+node_modules
+
+# Python
 .env
 __pycache__
