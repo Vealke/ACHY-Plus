@@ -7,7 +7,7 @@ const bot = mineflayer.createBot({
 })
 
 bot.once('spawn', () => {
-  bot.chat(`/skin set Korista_`)
+  bot.chat(`/skin set V3lly_`)
   bot.chat(`/msg Korista_ Привет, я защитная установка "${bot.username}". Пожалуйста прими мой tpa запрос на нужном тебе месте!`)
 })
 
