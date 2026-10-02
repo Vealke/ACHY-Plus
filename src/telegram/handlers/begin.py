@@ -11,6 +11,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.enums import ParseMode
 from aiogram import Router, F, Bot
 
+from src.telegram.keyboards import bot_kb
+
 router = Router()
 
 load_dotenv()
@@ -22,6 +24,17 @@ response: List[str] = []
 
 async def checkout(data: List[int],
                    ctd: int) -> bool:
+
+    """
+    Отвечает за очистку сообщений во время регистрации бота в базе данных.
+    
+    Args:
+        data (List[int]): Лист содержащий id всех полученных сообщений.
+        ctd (int): chat_id, то есть чат в котором удаляется список сообщений. 
+
+    Returns: 
+        bool:
+    """
 
     print(data)
     print(len(response))
@@ -38,7 +51,7 @@ class Schema(StatesGroup):
     nickname: str = State()
     password: str = State()
     second_nickname: str = State()
-    anarchy_team: int = State()
+    anarchy_team: str = State()
     anarchy_number: int = State()
     ensurence: str = State()
 
@@ -123,4 +136,18 @@ async def function(message: Message, state: FSMContext):
 
     data = await state.get_data()
     response.extend([data.get("user"), data.get("pw"), data.get("bot"),
-                     data.get("serv_type"), data.get("serv_num") ])
+                     data.get("serv_type"), data.get("serv_num")])
+
+    username: str = data.get("user")
+    password: str = data.get("pw")
+    bot_name: str = data.get("bot")
+    serv_type: str = data.get("serv_type")
+    serv_num: int = data.get("serv_num") 
+
+    await message.answer("⚙️ <b>УПРАВЛЕНИЕ БОТОМ</b>\n\n" \
+                        f"🤖 <b>Бот:</b> {bot_name}\n"\
+                        f"❗ <b>Пароль:</b> {password}\n"\
+                        f"✨ <b>Тип-Анархии:</b> {serv_type}\n"\
+                        f"❔ <b>Номер-Анархии:</b> {serv_num}\n",
+                        reply_markup=bot_kb,
+                        parse_mode=ParseMode.HTML)

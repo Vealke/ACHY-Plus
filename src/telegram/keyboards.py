@@ -14,3 +14,14 @@ start_kb = InlineKeyboardMarkup(
         ]
     ]
 )
+
+bot_kb = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="✅ Запустить", callback_data="turnon_button")
+        ],
+        [
+            InlineKeyboardButton(text="❌ Отключить", callback_data="turnoff_button")
+        ]
+    ]
+)
