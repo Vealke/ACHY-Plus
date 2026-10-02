@@ -14,12 +14,17 @@ import logging
 from rich.console import Console
 from aiogram import Dispatcher, Bot
 from dotenv import load_dotenv
+from aiogram import Router
 
 from src import router as main_router
+from src.telegram.middleware.ratelimit import ThrottlingMiddleware
 
 load_dotenv()
 console = Console()
 TOKEN = os.getenv("TOKEN")
+
+router = Router()
+router.message.middleware(ThrottlingMiddleware(time_limit=2.5))
 
 async def main():
 
@@ -31,7 +36,8 @@ async def main():
     # ts is important ↓
     # dp["db_pool"] = localSession
 
-    dp.include_router(main_router)
+    dp.include_routers(main_router,
+                       router)
 
     console.print(f"[bold green]BOT ID: {bot.id}\n" \
                   f"BOT TOKEN: {TOKEN}[bold green]\n" \
