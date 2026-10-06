@@ -1,5 +1,6 @@
 import os
 import asyncio
+import aiohttp
 
 from typing import List
 from dotenv import load_dotenv
@@ -129,6 +130,7 @@ async def function(call: CallbackQuery, state: FSMContext):
 
 @router.message(Schema.anarchy_number)
 async def function(message: Message, state: FSMContext):
+
     await state.set_state(Schema.ensurence)
     await state.update_data(serv_num=message.text)
     
@@ -143,6 +145,21 @@ async def function(message: Message, state: FSMContext):
     bot_name: str = data.get("bot")
     serv_type: str = data.get("serv_type")
     serv_num: int = data.get("serv_num") 
+
+    URL = "http://127.0.0.1:8000/create/user"
+
+    obj = {
+        "tgID": message.from_user.id,
+        "username": username,
+        "bot_username": bot_name,
+        "password": password,
+        "type": serv_type,
+        "serv_num": serv_num
+    }
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(URL, json=obj) as resp:
+            html = await resp.text()
 
     await message.answer("⚙️ <b>УПРАВЛЕНИЕ БОТОМ</b>\n\n" \
                         f"🤖 <b>Бот:</b> {bot_name}\n"\
