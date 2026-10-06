@@ -130,7 +130,6 @@ async def function(call: CallbackQuery, state: FSMContext):
 
 @router.message(Schema.anarchy_number)
 async def function(message: Message, state: FSMContext):
-
     await state.set_state(Schema.ensurence)
     await state.update_data(serv_num=message.text)
     
